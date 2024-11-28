@@ -1,0 +1,705 @@
+/*
+ * STYLES specific to the Snakes and Ladders Game
+ *
+ * Table of Contents: 
+ * 1. Reset
+ * 2. Colour variables
+ * 3. Players
+ *    3.1 Player Box
+ *    3.2 Player Effects
+ * 4. Static Game Information
+ * 5. Dynamic Game Information Container
+ *    5.1 Setup Phase Instructions
+ *    5.2 Gameplay Phase Instructions
+ *    5.3 Draw Card Phase Instructions
+ *    5.4 Instructions for Incorrect Square, Minigames and Game Over Phases
+ *    5.5 Dynamic Instructions Border Style Changes
+ * 6. Start Area
+ * 7. Card Pile Area
+ * 8. Game Board Section
+ * 9. Transforms, Transitions and Animations
+ *    9.1 Transform and Transition for Card Pile Area
+ *    9.2 Transform and Transition for Card Instructions
+ *    9.3 Glow-Fade Border Animation for Gameplay Phase
+ *    9.4 Glow-Fade Border Animation for Incorrect Square Phase
+ *    9.5 Instruction Rotation
+ * 10. Grid Square and Text Colours 
+ *     10.1 Border Indicating Player Position on Grid Square
+ *     10.2 Player Text Colours
+ *     10.3 Other Text Colours
+ *     10.4 Player Movement Colours
+ * 11. Snakes and Ladder Entities
+ * 
+ * REF: CSS organisation adapted from https://www.freecodecamp.org/news/comments-in-css/
+ */
+
+ 
+/*** 1. Reset Styles ***/
+
+::before, 
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* includes padding and border in element */
+}
+
+/*** 2. Colour Variables ***/
+
+:root {
+    /* Player Colours */
+    --player-green: rgb(34, 139, 34);
+    --player-yellow: rgb(255, 215, 0);
+    --player-black: rgb(0, 0, 0);
+    --player-blue: rgb(0, 0, 255);
+    --player-pink: rgb(255, 0, 255);
+    --player-cyan: rgb(0, 255, 255);
+    --player-joined-game: rgba(128, 128, 128, 0.4);
+    --entity-snake: rgb(192, 52, 53);
+    --entity-ladder: rgb(229, 197, 149);
+    /* Components */
+    --game-instructions-box: rgb(85, 107, 47);
+    --cards-back: rgb(100, 149, 237);
+    --cards-shadow: rgba(70, 91, 187, 0.5);
+    --start-box: rgb(218, 165, 32);
+    --button-blue: rgb(0, 0, 255);
+    --button-red: rgb(255, 0, 0);
+    --text-gray: rgb(47, 79, 79);
+    --text-black: rgb(0, 0, 0);
+    --text-white: rgb(255, 255, 255);
+    --text-background: rgb(255, 255, 255);
+    --grid-outline: rgb(211, 211, 211);
+    --grid-background: rgb(255, 255, 255);
+    --grid-number: rgb(161, 159, 159);
+    --grid-number-hidden: rgb(161, 159, 159, 0);
+    /* Game Phases */
+    --phase-gameplay: rgb(85, 107, 47);
+    --phase-setup: rgb(218, 165, 32);
+    --phase-drawcard: rgb(100, 149, 237);
+    --phase-minigame: rgb(187, 41, 187);
+    --phase-incorrect-square: rgb(255, 0, 0);
+    --phase-game-over: rgb(0, 0, 0);
+}
+
+/*** 3. Players ***/
+
+/* 3.1 Player Box */
+
+.players-heading {
+    display: flex;
+    font-size: 26px;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.players-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.players-box {
+    width: 250px;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    border-width: 8px;
+    border-style: solid;
+    font-weight: 500;
+    margin-top: -10px;
+}
+
+
+/*** 4. Static Game Information ***/
+
+.game-instructions-box {
+    width: 450px;
+    height: 450px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    border-radius: 10px;
+    border: var(--phase-gameplay) solid 3px;
+}
+
+.game-instructions-title {
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--game-instructions-box);
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.game-instructions-text p {
+    display: block;
+    margin: 5px;
+    padding: 5px 20px;
+    line-height: 1.2;
+    text-align: left;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--game-instructions-box);
+}
+
+.game-instructions-text b {
+    display: inline;
+    font-size: 17px;
+}
+
+
+/*** 5. Dynamic Game Information Container For Different Game Phase Instructions ***/
+
+.dynamic-instructions-box {
+    width: 450px;
+    height: 450px;
+    padding: 10px;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    background-color: var(--text-background);
+    border: var(--phase-gameplay) solid 3px;
+    border-width: 6px;
+    border-radius: 10px;
+}
+
+/* 5.1 Setup Phase Instructions */
+
+.setup-instructions-title {
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--text-gray);
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.setup-instructions-text p {
+    font-size: 18px;
+    text-align: left;
+    line-height: 1.25;
+    color: var(--text-gray);
+    margin: 0 0 10px;
+    padding: 0 10px;
+}
+
+.setup-instructions-text ol {
+    margin: 0;
+    text-align: left;
+    padding: 0 30px 0 30px;
+    font-size: 18px;
+    color: var(--text-gray);
+}
+
+.setup-instructions-text li {
+    padding: 5px;
+}
+
+
+/* 5.2 Gameplay Phase Instructions */
+
+.gameplay-instructions-title {
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--text-black);
+    margin: 15px;
+    margin-bottom: 30px;
+}
+
+.gameplay-instructions-text p {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5;
+    color: var(--text-black);
+    margin: 0 0 10px;
+    padding: 0 10px;
+}
+
+/* 5.3 Draw Card Phase Instructions */
+
+.card-instructions-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-black);
+}
+
+.card-instructions-text {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 15px 0 15px;
+    color: var(--text-black);
+}
+
+/* 5.4 Instructions for Incorrect Square, Minigames and Game Over Instructions */
+
+.incorrect-square-instructions-title,
+.minigame-instructions-title,
+.game-over-instructions-title {
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--text-black);
+    margin: 15px;
+    margin-bottom: 30px;
+}
+
+.incorrect-square-instructions-text p,
+.minigame-instructions-text p,
+.game-over-instructions-text p {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5;
+    color: var(--text-black);
+    margin: 0 0 10px;
+    padding: 0 10px;
+}
+
+
+/* 5.5 Dynamic Instructions Border Style Changes */
+
+.dynamic-border-setup {
+    border-color: var(--phase-setup);
+}
+
+.dynamic-border-gameplay {
+    border-color: var(--phase-gameplay);
+}
+
+.dynamic-border-drawcard {
+    border-color: var(--phase-drawcard);
+}
+
+.dynamic-border-incorrect-square {
+    border-color: var(--phase-incorrect-square);
+}
+
+.dynamic-border-minigame {
+    border-color: var(--phase-minigame);
+}
+
+.dynamic-border-game-over {
+    border-color: var(--phase-game-over);
+}
+
+
+/*** 6. Start Area ***/
+
+.start-container {
+    margin: 40px;
+    width: 70%;
+    height: 60%;
+    background-color: var(--start-box);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-contents p {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--text-white);
+    
+}
+
+
+/*** 7. Card Pile Area ***/
+
+.cards-container {
+    position: relative;
+    width: 70%;
+    height: 60%;
+    border-radius: 10%;
+    background-color: cornflowerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 10px var(--cards-shadow);
+}
+
+.cards-pile {
+    position: relative;
+}
+
+.cards-top {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: var(--cards-back);
+    transform: translateX(0) translateY(0) rotate(0);
+    transition: transform 1s ease;
+}
+
+.cards-contents p {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+/*** 8. Game Board section ***/
+
+.grid {
+    width: 100%;
+    position: relative;
+    margin: 10px;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-row {
+    width: 100%;
+    display: flex;
+    align-content: center;
+}
+
+.board-square {
+    width: 2.36cm;
+    height: 2.36cm;
+    margin: 0.05cm;
+    border: 2px solid var(--grid-outline);
+    background-color: var(--text-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-number {
+    font-size: x-large;
+    color: var(--grid-number);
+}
+
+.grid-number-hidden {
+    font-size: x-large;
+    color: var(--grid-number-hidden);
+    transition: color 2s;
+}
+
+.clockwise-icon {
+    width: 70%;
+    height: 70%;
+    margin-right: 20px;
+}
+
+.goose-icon, 
+.rotten-fruit-icon, 
+.basket-icon {
+    width: 90%;
+    height: 90%;
+    margin-right: 0;
+}
+
+.fruit-icon {
+    width: 80%;
+    height: 80%;
+    margin-right: 0;
+}
+
+.fly-icon {
+    width: 90%;
+    height: 90%;
+    margin-right: 25px;
+}
+
+
+/*** 9. Transforms, Transitions and Animations ***/
+
+/* 9.1 Transform and Transition for Card Pile Area */
+
+.cards-top {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 0;
+}
+
+.cards-top.animate {
+    opacity: 1;
+    transform: translateX(200px) translateY(-350px) rotate(60deg); 
+    transition: transform 1s ease;
+}
+
+/* 9.2 Transform and Transition for Card Instructions */
+
+.card-instruction {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+    transform: rotateY(90deg);
+    transition: opacity 0.4s ease, transform 0.5s ease 0.4s;
+}
+
+.card-instruction.animate {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+
+/* 9.3 Glow-Fade Border Animation for Gameplay Phase */
+
+@keyframes glowBorderGameplay {
+    0% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--phase-gameplay);
+    }
+    100% {
+        border-color: transparent;
+    }
+}
+
+.glow-border-animation-gameplay {
+    animation: glowBorderGameplay 2s ease-in-out infinite;
+}
+
+/* 9.4 Glow-Fade Border Animation for Incorrect Square Phase */
+
+@keyframes glowBorderIncorrectSquare {
+    0% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--phase-incorrect-square);
+    }
+    100% {
+        border-color: transparent;
+    }
+}
+
+.glow-border-animation-incorrect-square {
+    animation: glowBorderIncorrectSquare 2s ease-in-out infinite;
+}
+
+/* 9.5 Instruction Rotation */
+
+.rotate-0 {
+    transform: rotate(0deg);
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.rotate-270 {
+    transform: rotate(270deg);
+}
+
+
+/*** 10. Grid Square and Text Colours ***/
+
+/* 10.1 Border Indicating Player Position on Grid Square */
+
+.board-square-player {
+    border-width: 10px;
+}
+
+.player-black {
+    border-color: var(--player-black);
+    color: var(--player-black);
+}
+
+.player-blue {
+    border-color: var(--player-blue);
+    color: var(--player-blue);
+}
+
+.player-cyan {
+    border-color: var(--player-cyan);
+    color: var(--player-cyan);
+}
+
+.player-green {
+    border-color: var(--player-green);
+    color: var(--player-green);
+}
+
+.player-pink {
+    border-color: var(--player-pink);
+    color: var(--player-pink);
+}
+
+.player-yellow {
+    border-color: var(--player-yellow);
+    color: var(--player-yellow);
+}
+
+.player-joined-game {
+    border-color: var(--player-joined-game);
+    color: var(--player-joined-game);
+}
+
+/* Player Text Colours */
+
+.player-black-text {
+    color: var(--player-black);
+}
+
+.player-blue-text {
+    color: var(--player-blue);
+}
+
+.player-cyan-text {
+    color: var(--player-cyan);
+}
+
+.player-green-text {
+    color: var(--player-green);
+}
+
+.player-pink-text {
+    color: var(--player-pink);
+}
+
+.player-yellow-text {
+    color: var(--player-yellow);
+}
+
+.blue-button-text {
+    color: var(--button-blue);
+}
+
+/* 10.3 Other Text Colours */
+
+.red-button-text {
+    color: var(--button-red);
+}
+
+.start-box-text {
+    color: var(--start-box);
+}
+
+/* 10.4 Player Movement Colours */
+
+.board-square-intermediate {
+    opacity: 0.3;
+}
+
+.player-black.board-square-intermediate {
+    background-color: var(--player-black);
+}
+
+.player-blue.board-square-intermediate {
+    background-color: var(--player-blue);
+}
+
+.player-cyan.board-square-intermediate {
+    background-color: var(--player-cyan);
+}
+
+.player-green.board-square-intermediate {
+    background-color: var(--player-green);
+}
+
+.player-pink.board-square-intermediate {
+    background-color: var(--player-pink);
+}
+
+.player-yellow.board-square-intermediate {
+    background-color: var(--player-yellow);
+}
+
+/*** 11. Snakes and Ladder Entities ***/
+
+.entity-body {
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.snake .entity-body {
+    align-items: center;
+}
+
+.snake-head, .snake-tail {
+    transform-box: fill-box;
+    transform: rotate(-90deg);
+    height: 2cm;
+    width: 2cm;
+    margin-top: 2px;
+}
+
+.snake-head {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.snake-body {
+    background-color: var(--entity-snake);
+    height: 0.7cm;
+    width: 100%;
+    flex-grow: 2;
+}
+
+.snake-tail {
+    margin-left: -5px;
+    margin-right: -20px;
+}
+
+.ladder-bbox {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ladder-bbox > * {
+    background-color: var(--entity-ladder);
+}
+
+.ladder-side {
+    height: 0.25cm;
+    width: 100%;
+}
+
+.ladder-rung {
+    height: 1cm;
+    width: 0.25cm;
+}
+
+/*** 12. Minigame Timer Bar ***/
+.timer-bar {
+    position: absolute;
+    top: 0px;
+    right: 1cm;
+    height: 24.4cm;
+    width: 1cm;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: 1px solid var(--grid-outline);
+    background-color: var(--grid-background)
+}
+
+.timer-progress {
+    width: 100%;
+    background-color: var(--grid-outline);
+}
+
+
+
+

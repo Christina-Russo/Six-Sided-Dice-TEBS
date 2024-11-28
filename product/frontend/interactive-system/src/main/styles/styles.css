@@ -1,0 +1,198 @@
+/*
+ * BASE STYLES for the main display containers
+ *
+ * Table of Contents: 
+ * 1. Reset
+ * 2. Colour Variables
+ * 3. Base Styles
+ * 4. CSS Grid Layout for Whole Display
+ *    4.1. Team Banner Section
+ *    4.2. Game Title Section
+ *    4.3. Game Information Section
+ */
+
+ /*** 1. Reset ***/
+*,
+*::before, 
+*::after {
+    box-sizing: border-box;
+}
+
+/*** 2. Colour variables ***/
+:root {
+    --app-background: black;
+    --game-background: azure;
+    --team-text: white;
+    --game-title: white;
+}
+
+
+/*** 3. Base Styles ***/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.app {
+    width: 100%;
+    background-color: var(--app-background);
+}
+
+
+/*** 4. CSS Grid Layout for Whole Display ***/
+
+#grid {
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    grid-template-areas:  
+        "team-banner game-title"
+        "game-info game-board";
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows:  auto 1fr;
+}
+
+.team-banner {
+    grid-area: team-banner;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+
+.game-title {
+    grid-area: game-title;
+    width: 100%;
+    display: flex;
+}
+
+.game-info {
+    grid-area: game-info;
+    background-color: var(--game-background);
+}
+
+.game-board {
+    grid-area: game-board;
+    width: 100%;
+    display: flex;
+    background-color: var(--game-background);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 4.1 Team Banner Section */
+
+.team-container {
+    display: flex;
+    width: 100%;
+    justify-content: center; 
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    width: 2m;
+    height: 2cm;
+    padding: 2px;
+}
+
+.team-name {
+    color: var(--team-text);
+    padding-left: 25px;
+    font-size: 28px;
+    line-height: 0;
+}
+
+
+/* 4.2 Game Title Section */
+
+.title {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    color: var(--game-title);
+    justify-content: center;
+    font-size: 55px;
+}
+
+
+/* 4.3  Game Information Section */
+
+.game-info {
+    display: grid;
+    grid-template-areas:
+        "players players"
+        "static-info dynamic-info"
+        "cards start-position";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1.7fr 1fr;
+}
+
+.players {
+    grid-area: players;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.static-info {
+    grid-area: static-info;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    padding-left: 10px;  
+}
+
+.dynamic-info {
+    grid-area: dynamic-info;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding-right: 10px; 
+}
+
+.cards {
+    grid-area: cards;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    overflow: hidden;
+}
+
+.start {
+    grid-area: start-position;
+    width: 100%;
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+    padding-right: 10px;  
+}
+
+

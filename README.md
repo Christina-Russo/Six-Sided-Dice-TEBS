@@ -18,6 +18,7 @@ CHRISTINA RUSSO - Design, Frontend Software, Testing, Team Admin</p>
 This repository is organised into the following folders: 
 - materials: containing the supporting documents and images for this Readme file.<br>
 - product:  containing the project codebase for both hardware, backend and frontend.<br>
+- report: containing the [Technical Report](report/Technical%20Report.pdf).<br>
 
 ## Video
 
